@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import time
 from datetime import datetime
 
@@ -15,7 +17,7 @@ def write_to_file(filename):
     """
     with open(filename, 'w') as file:
         for i in range(26):
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # looks like 2023-12-15 17:55:33
             line = f"Write Line: {i} {timestamp}\n"
             print(line.strip())
             file.write(line)

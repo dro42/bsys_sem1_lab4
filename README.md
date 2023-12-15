@@ -2,4 +2,4 @@
 
 Exercise 4 - Filesystem &amp; Memory
 
-Team members:
+Team members: Sergiu, Jakob
