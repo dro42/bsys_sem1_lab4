@@ -36,6 +36,10 @@ Source: https://www.digitalocean.com/community/tutorials/how-to-handle-plain-tex
 
 #### What is the output of your implementation?
 
+````bash
+
+````
+
 #### Where can you find information about the file descriptor? (Hint: A process is an instance of a computer program that is being executed)
 
 #### What does pos, flags and mnt_id mean? (Hint: “/proc/<processid>/fdinfo”)
@@ -46,15 +50,14 @@ Source: https://www.digitalocean.com/community/tutorials/how-to-handle-plain-tex
 
 1 CPU Core, 2 GB RAM, 32 GB HDD
 
-[Linux and Windows](https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-using-virtualbox#1-overview
-[Linux and Windows](https://www.youtube.com/watch?v=v1JVqd8M3Yc)
+[Linux and Windows](https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-using-virtualbox#1-overview)
+[Linux and Windows YT Video](https://www.youtube.com/watch?v=v1JVqd8M3Yc)
 [Mac M1](https://freegistutorial.com/install-ubuntu-22-10-on-m1-mac/)
 [Mac](https://www.youtube.com/watch?v=EiO_CHfSn2s)
 
 ### 4.2 Run the script every 10 minutes
 
-Use the Cron-Daemon to run the script from 4.1 every 10 minutes.
-Source: https://wiki.ubuntuusers.de/Cron/
+Use the [Cron-Daemon](https://wiki.ubuntuusers.de/Cron/) to run the script from 4.1 every 10 minutes.
 
 ### 4.3 While 1
 
