@@ -2,11 +2,11 @@
 
 [Lab 4 Assignment]()
 
-- [4. Filesystem and Memory](#4.%20Filesystem%20and%20Memory)
-- [4.1. File Handle](# 4.1. File Handle)
-  - [Solution to Pseudocode:](#### Solution to Pseudocode:)
-  - [What is the output of your implementation?](#### What is the output of your implementation?)
-  - [What is a file descriptor?](#### What is a file descriptor?)
+- [4. Filesystem and Memory](#4.-Filesystem-and-Memory)
+- [4.1. File Handle](#4.1.-File-Handle)
+  - [Solution to Pseudocode:](#Solution-to-Pseudocode:)
+  - [What is the output of your implementation?](#What-is-the-output-of-your-implementation?)
+  - [What is a file descriptor?](#What-is-a-file-descriptor?)
   - [Where can you find information about the file descriptor?](#### Where can you find information about the file
     descriptor? (Hint: A process is an instance of a computer program that is being executed))
   - [What does pos, flags and mnt_id mean?](#### What does pos, flags and mnt_id mean? (Hint: “/proc/<processid>
