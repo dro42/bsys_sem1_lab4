@@ -445,7 +445,7 @@ def main():
         append_to_file("file2.txt")
 ```
 
-#### Find out the pid (<processid>) of the process and look at “/proc/<processid>/maps”. What does the values mean?
+#### Find out the pid (<processid>) of the process and look at “/proc/<processid>/maps”. What do the values mean?
 
 ```bash
 root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# ps aux --forest
@@ -511,7 +511,7 @@ This file is useful for understanding the memory layout of a process, including 
 space are mapped to which files, and with what permissions. It can help in debugging, performance tuning, and security
 analysis.
 
-#### Look at “/proc/<processid>/smaps”. What does the values Size, Rss, Pss, Shared_Clean,Shared_Dirty, Private_Clean, Private_Dirty, Referenced, Swap and SwapPss mean?
+#### Look at “/proc/<processid>/smaps”. What do the values Size, Rss, Pss, Shared_Clean,Shared_Dirty, Private_Clean, Private_Dirty, Referenced, Swap and SwapPss mean?
 
 The `/proc/<processid>/smaps` file provides detailed memory usage statistics for each memory region of a process. Here's
 what the values mean:
@@ -1996,7 +1996,8 @@ Solution:
 
 When ram.py 1 is executed 1024 MB of RAM are being used on the virtual machine. And with the parameter 2 2048 MB and
 with the Parameter 3 with 3072 MB.
-If more RAM is used then we have on the machince including swap space, then the script will end with a OOM.
+If more RAM is used then we have on the machine including swap space, then the script will end with an OOM (out-of
+memory).
 ![htop_ram1.png](resources/htop_ram1.png)
 ![htop_ram2.png](resources/htop_ram2.png)
 ![htop_ram3.png](resources/htop_ram3.png)
@@ -2004,7 +2005,8 @@ If more RAM is used then we have on the machince including swap space, then the 
 #### Start htop and enter „swapoff –a“ on the terminal. Start the script with the following arguments: 1, 2, 3, 4 and 5. What happens now? What has changed?
 
 Swap memory is turned off. So we only have our RAM of 2048 MB. This means we cannot start our script anymore as we do
-not have sufficient RAM because the System is using more than the half.
+not have sufficient RAM because the System is using more than the half. (out-of-memory (OOM) conditions happen where the
+system has to kill processes to free up memory.)
 
 ```bash
 root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# swapoff -a
@@ -2050,7 +2052,7 @@ https://askubuntu.com/questions/178712/how-to-increase-swap-space
 
 #### Compare the “/proc/meminfo” or “htop” with a running ram.py and a not running ram.py.
 
-1. without running script:
+1. Without running the ram.py script we see a low consumption of RAM and SWAP memory.
     1. htop
        ![img.png](resources/compare_htop_procmeminfo_no_run_ram.png)
     2. Showing the content of /proc/meminfo
@@ -2107,7 +2109,7 @@ https://askubuntu.com/questions/178712/how-to-increase-swap-space
          Hugepagesize:       2048 kB
          Hugetlb:               0 kB
          ```
-2. with running ram.py script and parameter 5:
+2. While running ram.py script with the parameter 4 we see a large consumption of RAM and SWAP Memory.
     1. htop
        ![img.png](resources/compare_htop_procmeminfo_run_ram_with4.png)
     2. Showing the content of /proc/meminfo
