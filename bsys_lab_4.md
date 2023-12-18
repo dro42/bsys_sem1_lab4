@@ -1993,14 +1993,175 @@ Solution:
 ```
 
 #### Start the python script on your Ubuntu. Start the script with the following arguments: 1, 2, 3, 4 and 5. (e.g.: python ram.py 1) What happens?
-When ram.py 1 is executed 1024 MB of RAM are being used on the virtual machine. And with the parameter 2 2048 MB. 
 
-
+When ram.py 1 is executed 1024 MB of RAM are being used on the virtual machine. And with the parameter 2 2048 MB and
+with the Parameter 3 with 3072 MB.
+If more RAM is used then we have on the machince including swap space, then the script will end with a OOM.
+![htop_ram1.png](htop_ram1.png)
+![htop_ram2.png](htop_ram2.png)
+![htop_ram3.png](htop_ram3.png)
 
 #### Start htop and enter „swapoff –a“ on the terminal. Start the script with the following arguments: 1, 2, 3, 4 and 5. What happens now? What has changed?
 
+Swap memory is turned off. So we only have our RAM of 2048 MB. This means we cannot start our script anymore as we do
+not have sufficient RAM because the System is using more than the half.
+
+```bash
+root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# swapoff -a
+root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# python3 ram.py 1
+Killed
+root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# python3 ram.py 2
+Killed
+root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# python3 ram.py 3
+Killed
+```
+
 #### Try to change your operating system, to run the python script with all arguments (1, 2, 3, 4 and 5).
+
+```bash
+root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# dd if=/dev/zero of=/media/ptfl/swapfile.img bs=1024 count=6M #This file will contain virtual memory contents so make file big enough for your needs. This one will create a 1GiB file, which means +6GiB swap space for your system:
+root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# ls -lahi /media/ptfl/ 
+total 6.1G
+1179650 drwxr-xr-x 2 root root 4.0K Dec 18 15:54 .
+1179649 drwxr-xr-x 4 root root 4.0K Dec 15 19:34 ..
+1179654 -rw-r--r-- 1 root root    0 Dec 18 15:53 swap.img
+1179653 -rw------- 1 root root 6.0G Dec 18 16:01 swapfile.img #this is our swap file/space
+3145728+0 records in
+3145728+0 records out
+3221225472 bytes (3.2 GB, 3.0 GiB) copied, 3.21589 s, 1.0 GB/s
+root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# mkswap /media/ptfl/swapfile.img # The following command is going to make a "swap filesystem" inside your fresh swap file.
+mkswap: /media/ptfl/swapfile.img: insecure permissions 0644, fix with: chmod 0600 /media/ptfl/swapfile.img
+Setting up swapspace version 1, size = 3 GiB (3221221376 bytes)
+no label, UUID=5b191317-54c4-436a-880e-4e72c5056739
+root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# swapon /media/ptfl/swapfile.img # enables the swap space
+swapon: /media/ptfl/swapfile.img: insecure permissions 0644, 0600 suggested.
+# to make persitent after Boot
+# Add this line to /etc/fstab
+# /media/ptfl/swapfile.img swap swap sw 0 0
+```
+
+![img.png](increased_swapspace.png)
+
+Here we can see it works now with the Parameter 5.
+
+![img.png](htop_ram_5_working.png)
 
 https://askubuntu.com/questions/178712/how-to-increase-swap-space
 
 #### Compare the “/proc/meminfo” or “htop” with a running ram.py and a not running ram.py.
+
+1. without running script:
+    1. htop
+       ![img.png](compare_htop_procmeminfo_no_run_ram.png)
+    2. Showing the content of /proc/meminfo
+         ```bash
+         root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# cat /proc/meminfo
+         MemTotal:        2014516 kB
+         MemFree:         1271964 kB
+         MemAvailable:    1368544 kB
+         Buffers:            7484 kB
+         Cached:           279040 kB
+         SwapCached:        24040 kB
+         Active:           103320 kB
+         Inactive:         262800 kB
+         Active(anon):      53324 kB
+         Inactive(anon):   176180 kB
+         Active(file):      49996 kB
+         Inactive(file):    86620 kB
+         Unevictable:      163416 kB
+         Mlocked:           26320 kB
+         SwapTotal:       8388600 kB
+         SwapFree:        7432912 kB
+         Dirty:               476 kB
+         Writeback:             0 kB
+         AnonPages:        222900 kB
+         Mapped:           105500 kB
+         Shmem:            142520 kB
+         KReclaimable:      43828 kB
+         Slab:             119740 kB
+         SReclaimable:      43828 kB
+         SUnreclaim:        75912 kB
+         KernelStack:       10048 kB
+         PageTables:        23856 kB
+         NFS_Unstable:          0 kB
+         Bounce:                0 kB
+         WritebackTmp:          0 kB
+         CommitLimit:     9395856 kB
+         Committed_AS:    4746664 kB
+         VmallocTotal:   133143592960 kB
+         VmallocUsed:       28060 kB
+         VmallocChunk:          0 kB
+         Percpu:              832 kB
+         HardwareCorrupted:     0 kB
+         AnonHugePages:         0 kB
+         ShmemHugePages:        0 kB
+         ShmemPmdMapped:        0 kB
+         FileHugePages:         0 kB
+         FilePmdMapped:         0 kB
+         CmaTotal:          32768 kB
+         CmaFree:             344 kB
+         HugePages_Total:       0
+         HugePages_Free:        0
+         HugePages_Rsvd:        0
+         HugePages_Surp:        0
+         Hugepagesize:       2048 kB
+         Hugetlb:               0 kB
+         ```
+2. with running ram.py script and parameter 5:
+    1. htop
+       ![img.png](compare_htop_procmeminfo_run_ram_with4.png)
+    2. Showing the content of /proc/meminfo
+       ```bash
+       parallels@ubuntu-linux-22-04-02-desktop:~$ cat /proc/meminfo
+       MemTotal:        2014516 kB
+       MemFree:           52612 kB
+       MemAvailable:      71952 kB
+       Buffers:            1320 kB
+       Cached:           204924 kB
+       SwapCached:        37524 kB
+       Active:            81424 kB
+       Inactive:        1515460 kB
+       Active(anon):      46996 kB
+       Inactive(anon):  1493068 kB
+       Active(file):      34428 kB
+       Inactive(file):    22392 kB
+       Unevictable:      163420 kB
+       Mlocked:           26320 kB
+       SwapTotal:       8388600 kB
+       SwapFree:        4515536 kB
+       Dirty:                76 kB
+       Writeback:             0 kB
+       AnonPages:       1535096 kB
+       Mapped:            68160 kB
+       Shmem:            142036 kB
+       KReclaimable:      48944 kB
+       Slab:             124840 kB
+       SReclaimable:      48944 kB
+       SUnreclaim:        75896 kB
+       KernelStack:       10108 kB
+       PageTables:        32340 kB
+       NFS_Unstable:          0 kB
+       Bounce:                0 kB
+       WritebackTmp:          0 kB
+       CommitLimit:     9395856 kB
+       Committed_AS:    8965292 kB
+       VmallocTotal:   133143592960 kB
+       VmallocUsed:       28148 kB
+       VmallocChunk:          0 kB
+       Percpu:              832 kB
+       HardwareCorrupted:     0 kB
+       AnonHugePages:         0 kB
+       ShmemHugePages:        0 kB
+       ShmemPmdMapped:        0 kB
+       FileHugePages:         0 kB
+       FilePmdMapped:         0 kB
+       CmaTotal:          32768 kB
+       CmaFree:           21828 kB
+       HugePages_Total:       0
+       HugePages_Free:        0
+       HugePages_Rsvd:        0
+       HugePages_Surp:        0
+       Hugepagesize:       2048 kB
+       Hugetlb:               0 kB
+       ```
+       
