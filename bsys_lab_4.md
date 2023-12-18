@@ -2,19 +2,37 @@
 
 [Lab 4 Assignment]()
 
-- [4. Filesystem and Memory](#4.-Filesystem-and-Memory)
-- [4.1. File Handle](#4.1.-File-Handle)
-  - [Solution to Pseudocode:](#Solution-to-Pseudocode:)
-  - [What is the output of your implementation?](#What-is-the-output-of-your-implementation?)
-  - [What is a file descriptor?](#What-is-a-file-descriptor?)
-  - [Where can you find information about the file descriptor?](#### Where can you find information about the file
-    descriptor? (Hint: A process is an instance of a computer program that is being executed))
-  - [What does pos, flags and mnt_id mean?](#### What does pos, flags and mnt_id mean? (Hint: “/proc/<processid>
-    /fdinfo”))
-  - [What permissions do your files have?](####Let’s%20have%20a%20look%20at%20the%20files.%20What%20permissions%20do%20your%20files%20have?%20"Hint:“ls%20-lahi%20/proc/)
-- [4.2 Run the script every 10 minutes](#4.2%20Run%20the%20script%20every%2010%20minutes)
-  - [What is a cronjob?](#What%20is%20a%20cronjob?)
-- [4.3 While 1](4.3%20While%201)
+- [4. Filesystem and Memory](#4-filesystem-and-memory)
+    - [4.1. File Handle](#41-file-handle)
+        - [Solution to Pseudocode:](#solution-to-pseudocode)
+        - [What is the output of your implementation?](#what-is-the-output-of-your-implementation)
+        - [What is a file descriptor?](#what-is-a-file-descriptor)
+        - [Where can you find information about the file descriptor?](#where-can-you-find-information-about-the-file-descriptor-hint-a-process-is-an-instance-of-a-computer-program-that-is-being-executed)
+        - [What does pos, flags and mnt_id mean?](#what-does-pos-flags-and-mnt_id-mean-hint-procprocessidfdinfo)
+        - [What permissions do your files have?](#lets-have-a-look-at-the-files-what-permissions-do-your-files-have-hint-ls--lahi-procprocessidfd)
+    - [4.2 Run the script every 10 minutes](#42-run-the-script-every-10-minutes)
+        - [What is a cronjob?](#what-is-a-cronjob)
+            - [Solution Cronjob](#solution-cronjob)
+    - [4.3 While 1](#43-while-1)
+        - [Solution to infinite Loop](#solution-infinite-loop)
+        - [Find out the pid (<processid>) of the process and look at “/proc/<processid>/maps”. What does
+          the values mean?](#find-out-the-pid-processid-of-the-process-and-look-at-procprocessidmaps-what-do-the-values-mean)
+        - [Look at “/proc/<processid>/smaps”. What does the values Size, Rss, Pss, Shared_Clean,
+          Shared_Dirty, Private_Clean, Private_Dirty, Referenced, Swap and SwapPss mean?](#look-at-procprocessidsmaps-what-do-the-values-size-rss-pss-shared_cleanshared_dirty-private_clean-private_dirty-referenced-swap-and-swappss-mean)
+        - [What is the pagesize of your system?](#what-is-the-pagesize-of-your-system)
+        - [How can you print out all major and minor pagefaults?]()
+        - [Start htop and enter „swapoff –a“ on the terminal. What happens?](#start-htop-and-enter-swapoff-a-on-the-terminal-what-happens)
+        - [Reboot your system and print out all your page faults again.](#reboot-your-system-and-print-out-all-your-page-faults-again)
+    - [4.4 Fill the RAM](#44-fill-the-ram)
+        - [Solution ram.py](#solution-rampy)
+        - [Start the python script on your Ubuntu. Start the script with the following arguments: 1, 2, 3, 4
+          and 5. (e.g.: python ram.py 1) What happens?]()
+        - [Start htop and enter „swapoff –a“ on the terminal. Start the script with the following arguments: 1,
+          2, 3, 4 and 5. What happens now? What has changed?]()
+        - [Try to change your operating system, to run the python script with all arguments (1, 2, 3, 4 and
+          5).]()
+        - [Compare the “/proc/meminfo” or “htop” with a running ram.py and a not running ram.py.]()
+        - [c/meminfo” or “htop” with a running ram.py and a not running ram.py.](#what-is-paging)
 
 ## 4. Filesystem and Memory
 
@@ -374,14 +392,14 @@ For both examples, the format is similar, so I'll explain using `file1.txt` as t
    filesystem.
 2. **-rw-r--r--**: This represents the file permissions. Let's break this down:
 
-   - `-`: The first character indicates the type of file. A dash (`-`) signifies that this is a regular file. Other
-     possibilities include `d` for directory, `l` for symbolic link, etc.
-   - `rw-`: The next three characters represent the permissions for the user who owns the file (`c2310475021` in this
-     case). Here, `rw-` means the user has read (`r`) and write (`w`) permissions, but no execute (`x`) permission.
-   - `r--`: The following three characters are the permissions for the group that owns the file (`student` in this
-     case). `r--` means the group members can read the file but cannot write (`w`) or execute (`x`) it.
-   - `r--`: The last three characters are the permissions for others (everyone else). Similar to the group, others can
-     only read the file.
+    - `-`: The first character indicates the type of file. A dash (`-`) signifies that this is a regular file. Other
+      possibilities include `d` for directory, `l` for symbolic link, etc.
+    - `rw-`: The next three characters represent the permissions for the user who owns the file (`c2310475021` in this
+      case). Here, `rw-` means the user has read (`r`) and write (`w`) permissions, but no execute (`x`) permission.
+    - `r--`: The following three characters are the permissions for the group that owns the file (`student` in this
+      case). `r--` means the group members can read the file but cannot write (`w`) or execute (`x`) it.
+    - `r--`: The last three characters are the permissions for others (everyone else). Similar to the group, others can
+      only read the file.
 3. **1**: This number shows the count of hard links to this file. It indicates how many different directory entries
    point to this inode.
 4. **c2310475021**: The name of the user who owns the file.
@@ -424,7 +442,7 @@ maintenance tasks. They're especially useful for automating repetitive tasks tha
 For more detailed and specific information on cron jobs and their usage in Ubuntu systems, you can refer to the Ubuntu
 Users Cron Wiki page [here](https://wiki.ubuntuusers.de/Cron/).
 
-Solution:
+#### Solution Cronjob:
 
 ```bash
 root@ubuntu-linux-22-04-02-desktop:/home/parallels# crontab -l
@@ -442,7 +460,7 @@ procedure main()
         append_to_file(file2):
 ```
 
-Solution:
+#### Solution Infinite Loop:
 
 ```python3
 def main():
@@ -1546,9 +1564,9 @@ Starting `htop` and then executing the command `swapoff -a` in the terminal woul
 2. **Impact on System Performance**: If your system is heavily relying on swap space (due to using most of the physical
    RAM), turning off the swap with `swapoff -a` could lead to increased memory pressure. This might result in:
 
-   - Slower system performance due to more frequent access of the slower disk-based swap.
-   - In extreme cases, if there's insufficient RAM to handle the current load, processes may be killed by the Out Of
-     Memory (OOM) killer to free up memory.
+    - Slower system performance due to more frequent access of the slower disk-based swap.
+    - In extreme cases, if there's insufficient RAM to handle the current load, processes may be killed by the Out Of
+      Memory (OOM) killer to free up memory.
 3. **Temporary Change**: It's important to note that `swapoff -a` is a temporary change. If the system is rebooted, swap
    will be enabled again, unless you permanently disable it by modifying the `/etc/fstab` file.
 
@@ -1975,20 +1993,56 @@ root@ubuntu-linux-22-04-02-desktop:/home/parallels# ps -eo min_flt,maj_flt,cmd
 
 ### 4.4 Fill the RAM
 
-Implement the following python script “ram.py”.
+#### Implement the following python script “ram.py”.
 
-```
-import sys, time
-some_str = ' ' * 1024 * 1024 * 1024 * int(sys.argv[1])
-while 1:
-    print("true")
-    time.sleep(1)
-```
+    ```
+    import sys, time
+    some_str = ' ' * 1024 * 1024 * 1024 * int(sys.argv[1])
+    while 1:
+        print("true")
+        time.sleep(1)
+    ```
 
-Solution:
+##### Solution ram.py:
 
 ```python3
+#!/usr/bin/python3
 
+import sys
+import time
+
+
+def main():
+    """
+    To run this script, use a command like python script.py 2, where 2 is the number of gigabytes of memory you want
+    to allocate. This script will create a string occupying the specified amount of memory and then enter an infinite
+    loop, printing "true" every second. Please be cautious with the value you provide as the command-line argument,
+    as very large values can consume a significant amount of your system's memory and potentially lead to system
+    instability. :return:
+    """
+    # Check if the command line argument is provided
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <memory_in_gb>")
+        sys.exit(1)
+
+    try:
+        # Convert the first command-line argument to an integer
+        gigabytes = int(sys.argv[1])
+    except ValueError:
+        print("Please provide a valid integer for memory size in GB.")
+        sys.exit(1)
+
+    # Allocate a string of 'gigabytes' GB in size
+    some_str = ' ' * 1024 * 1024 * 1024 * gigabytes
+
+    # Infinite loop
+    while True:
+        print("true")
+        time.sleep(1)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 #### Start the python script on your Ubuntu. Start the script with the following arguments: 1, 2, 3, 4 and 5. (e.g.: python ram.py 1) What happens?
@@ -2052,119 +2106,119 @@ https://askubuntu.com/questions/178712/how-to-increase-swap-space
 #### Compare the “/proc/meminfo” or “htop” with a running ram.py and a not running ram.py.
 
 1. Without running the ram.py script we see a low consumption of RAM and SWAP memory.
-   1. htop
-      ![img.png](resources/compare_htop_procmeminfo_no_run_ram.png)
-   2. Showing the content of /proc/meminfo
-      ```bash
-      root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# cat /proc/meminfo
-      MemTotal:        2014516 kB
-      MemFree:         1271964 kB
-      MemAvailable:    1368544 kB
-      Buffers:            7484 kB
-      Cached:           279040 kB
-      SwapCached:        24040 kB
-      Active:           103320 kB
-      Inactive:         262800 kB
-      Active(anon):      53324 kB
-      Inactive(anon):   176180 kB
-      Active(file):      49996 kB
-      Inactive(file):    86620 kB
-      Unevictable:      163416 kB
-      Mlocked:           26320 kB
-      SwapTotal:       8388600 kB
-      SwapFree:        7432912 kB
-      Dirty:               476 kB
-      Writeback:             0 kB
-      AnonPages:        222900 kB
-      Mapped:           105500 kB
-      Shmem:            142520 kB
-      KReclaimable:      43828 kB
-      Slab:             119740 kB
-      SReclaimable:      43828 kB
-      SUnreclaim:        75912 kB
-      KernelStack:       10048 kB
-      PageTables:        23856 kB
-      NFS_Unstable:          0 kB
-      Bounce:                0 kB
-      WritebackTmp:          0 kB
-      CommitLimit:     9395856 kB
-      Committed_AS:    4746664 kB
-      VmallocTotal:   133143592960 kB
-      VmallocUsed:       28060 kB
-      VmallocChunk:          0 kB
-      Percpu:              832 kB
-      HardwareCorrupted:     0 kB
-      AnonHugePages:         0 kB
-      ShmemHugePages:        0 kB
-      ShmemPmdMapped:        0 kB
-      FileHugePages:         0 kB
-      FilePmdMapped:         0 kB
-      CmaTotal:          32768 kB
-      CmaFree:             344 kB
-      HugePages_Total:       0
-      HugePages_Free:        0
-      HugePages_Rsvd:        0
-      HugePages_Surp:        0
-      Hugepagesize:       2048 kB
-      Hugetlb:               0 kB
-      ```
+    1. htop
+       ![img.png](resources/compare_htop_procmeminfo_no_run_ram.png)
+    2. Showing the content of /proc/meminfo
+       ```bash
+       root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# cat /proc/meminfo
+       MemTotal:        2014516 kB
+       MemFree:         1271964 kB
+       MemAvailable:    1368544 kB
+       Buffers:            7484 kB
+       Cached:           279040 kB
+       SwapCached:        24040 kB
+       Active:           103320 kB
+       Inactive:         262800 kB
+       Active(anon):      53324 kB
+       Inactive(anon):   176180 kB
+       Active(file):      49996 kB
+       Inactive(file):    86620 kB
+       Unevictable:      163416 kB
+       Mlocked:           26320 kB
+       SwapTotal:       8388600 kB
+       SwapFree:        7432912 kB
+       Dirty:               476 kB
+       Writeback:             0 kB
+       AnonPages:        222900 kB
+       Mapped:           105500 kB
+       Shmem:            142520 kB
+       KReclaimable:      43828 kB
+       Slab:             119740 kB
+       SReclaimable:      43828 kB
+       SUnreclaim:        75912 kB
+       KernelStack:       10048 kB
+       PageTables:        23856 kB
+       NFS_Unstable:          0 kB
+       Bounce:                0 kB
+       WritebackTmp:          0 kB
+       CommitLimit:     9395856 kB
+       Committed_AS:    4746664 kB
+       VmallocTotal:   133143592960 kB
+       VmallocUsed:       28060 kB
+       VmallocChunk:          0 kB
+       Percpu:              832 kB
+       HardwareCorrupted:     0 kB
+       AnonHugePages:         0 kB
+       ShmemHugePages:        0 kB
+       ShmemPmdMapped:        0 kB
+       FileHugePages:         0 kB
+       FilePmdMapped:         0 kB
+       CmaTotal:          32768 kB
+       CmaFree:             344 kB
+       HugePages_Total:       0
+       HugePages_Free:        0
+       HugePages_Rsvd:        0
+       HugePages_Surp:        0
+       Hugepagesize:       2048 kB
+       Hugetlb:               0 kB
+       ```
 2. While running ram.py script with the parameter 4 we see a large consumption of RAM and SWAP Memory.
-   1. htop
-      ![img.png](resources/compare_htop_procmeminfo_run_ram_with4.png)
-   2. Showing the content of /proc/meminfo
-      ```bash
-      parallels@ubuntu-linux-22-04-02-desktop:~$ cat /proc/meminfo
-      MemTotal:        2014516 kB
-      MemFree:           52612 kB
-      MemAvailable:      71952 kB
-      Buffers:            1320 kB
-      Cached:           204924 kB
-      SwapCached:        37524 kB
-      Active:            81424 kB
-      Inactive:        1515460 kB
-      Active(anon):      46996 kB
-      Inactive(anon):  1493068 kB
-      Active(file):      34428 kB
-      Inactive(file):    22392 kB
-      Unevictable:      163420 kB
-      Mlocked:           26320 kB
-      SwapTotal:       8388600 kB
-      SwapFree:        4515536 kB
-      Dirty:                76 kB
-      Writeback:             0 kB
-      AnonPages:       1535096 kB
-      Mapped:            68160 kB
-      Shmem:            142036 kB
-      KReclaimable:      48944 kB
-      Slab:             124840 kB
-      SReclaimable:      48944 kB
-      SUnreclaim:        75896 kB
-      KernelStack:       10108 kB
-      PageTables:        32340 kB
-      NFS_Unstable:          0 kB
-      Bounce:                0 kB
-      WritebackTmp:          0 kB
-      CommitLimit:     9395856 kB
-      Committed_AS:    8965292 kB
-      VmallocTotal:   133143592960 kB
-      VmallocUsed:       28148 kB
-      VmallocChunk:          0 kB
-      Percpu:              832 kB
-      HardwareCorrupted:     0 kB
-      AnonHugePages:         0 kB
-      ShmemHugePages:        0 kB
-      ShmemPmdMapped:        0 kB
-      FileHugePages:         0 kB
-      FilePmdMapped:         0 kB
-      CmaTotal:          32768 kB
-      CmaFree:           21828 kB
-      HugePages_Total:       0
-      HugePages_Free:        0
-      HugePages_Rsvd:        0
-      HugePages_Surp:        0
-      Hugepagesize:       2048 kB
-      Hugetlb:               0 kB
-      ```
+    1. htop
+       ![img.png](resources/compare_htop_procmeminfo_run_ram_with4.png)
+    2. Showing the content of /proc/meminfo
+       ```bash
+       parallels@ubuntu-linux-22-04-02-desktop:~$ cat /proc/meminfo
+       MemTotal:        2014516 kB
+       MemFree:           52612 kB
+       MemAvailable:      71952 kB
+       Buffers:            1320 kB
+       Cached:           204924 kB
+       SwapCached:        37524 kB
+       Active:            81424 kB
+       Inactive:        1515460 kB
+       Active(anon):      46996 kB
+       Inactive(anon):  1493068 kB
+       Active(file):      34428 kB
+       Inactive(file):    22392 kB
+       Unevictable:      163420 kB
+       Mlocked:           26320 kB
+       SwapTotal:       8388600 kB
+       SwapFree:        4515536 kB
+       Dirty:                76 kB
+       Writeback:             0 kB
+       AnonPages:       1535096 kB
+       Mapped:            68160 kB
+       Shmem:            142036 kB
+       KReclaimable:      48944 kB
+       Slab:             124840 kB
+       SReclaimable:      48944 kB
+       SUnreclaim:        75896 kB
+       KernelStack:       10108 kB
+       PageTables:        32340 kB
+       NFS_Unstable:          0 kB
+       Bounce:                0 kB
+       WritebackTmp:          0 kB
+       CommitLimit:     9395856 kB
+       Committed_AS:    8965292 kB
+       VmallocTotal:   133143592960 kB
+       VmallocUsed:       28148 kB
+       VmallocChunk:          0 kB
+       Percpu:              832 kB
+       HardwareCorrupted:     0 kB
+       AnonHugePages:         0 kB
+       ShmemHugePages:        0 kB
+       ShmemPmdMapped:        0 kB
+       FileHugePages:         0 kB
+       FilePmdMapped:         0 kB
+       CmaTotal:          32768 kB
+       CmaFree:           21828 kB
+       HugePages_Total:       0
+       HugePages_Free:        0
+       HugePages_Rsvd:        0
+       HugePages_Surp:        0
+       Hugepagesize:       2048 kB
+       Hugetlb:               0 kB
+       ```
 
 #### What is paging?
 
@@ -2181,10 +2235,10 @@ helps in achieving virtual memory, allowing the physical address space of a proc
    into any available frames. The system keeps track of these mappings using a page table. Each entry in the page table
    corresponds to a page in the logical memory and points to a frame in physical memory, if that page is in memory.
 5. **Advantages of Paging**:
-   - **Eliminates External Fragmentation**: Unlike contiguous memory allocation, paging avoids the problem of external
-     fragmentation because pages and frames are of fixed size.
-   - **Supports Virtual Memory**: Paging facilitates the implementation of virtual memory, allowing more processes in
-     memory than would physically fit, by swapping pages in and out of the physical memory.
+    - **Eliminates External Fragmentation**: Unlike contiguous memory allocation, paging avoids the problem of external
+      fragmentation because pages and frames are of fixed size.
+    - **Supports Virtual Memory**: Paging facilitates the implementation of virtual memory, allowing more processes in
+      memory than would physically fit, by swapping pages in and out of the physical memory.
 6. **Address Translation**: When a process runs, its virtual addresses are translated into physical addresses. The page
    number portion of a virtual address is used to index into the page table, finding the corresponding frame number,
    which is combined with the page offset to form the physical address.
