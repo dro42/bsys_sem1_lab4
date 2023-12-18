@@ -26,13 +26,13 @@
     - [4.4 Fill the RAM](#44-fill-the-ram)
         - [Solution ram.py](#solution-rampy)
         - [Start the python script on your Ubuntu. Start the script with the following arguments: 1, 2, 3, 4
-          and 5. (e.g.: python ram.py 1) What happens?]()
+          and 5. (e.g.: python ram.py 1) What happens?](#start-the-python-script-on-your-ubuntu-start-the-script-with-the-following-arguments-1-2-3-4-and-5-eg-python-rampy-1-what-happens)
         - [Start htop and enter „swapoff –a“ on the terminal. Start the script with the following arguments: 1,
-          2, 3, 4 and 5. What happens now? What has changed?]()
+          2, 3, 4 and 5. What happens now? What has changed?](#start-htop-and-enter-swapoff-a-on-the-terminal-start-the-script-with-the-following-arguments-1-2-3-4-and-5-what-happens-now-what-has-changed)
         - [Try to change your operating system, to run the python script with all arguments (1, 2, 3, 4 and
-          5).]()
-        - [Compare the “/proc/meminfo” or “htop” with a running ram.py and a not running ram.py.]()
-        - [c/meminfo” or “htop” with a running ram.py and a not running ram.py.](#what-is-paging)
+          5).](#try-to-change-your-operating-system-to-run-the-python-script-with-all-arguments-1-2-3-4-and-5)
+        - [Compare the “/proc/meminfo” or “htop” with a running ram.py and a not running ram.py.](#compare-the-procmeminfo-or-htop-with-a-running-rampy-and-a-not-running-rampy)
+        - [What is paging?](#what-is-paging)
 
 ## 4. Filesystem and Memory
 
