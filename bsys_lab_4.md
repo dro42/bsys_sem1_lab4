@@ -1555,7 +1555,7 @@ Starting `htop` and then executing the command `swapoff -a` in the terminal woul
 Always exercise caution when using `swapoff`, especially on systems with limited RAM and high memory usage, as it can
 significantly affect system performance and stability.
 
-![htop.png](htop_swapoff.png)
+![htop.png](resources/htop_swapoff.png)
 
 #### Reboot your system and print out all your page faults again.
 
@@ -1997,9 +1997,9 @@ Solution:
 When ram.py 1 is executed 1024 MB of RAM are being used on the virtual machine. And with the parameter 2 2048 MB and
 with the Parameter 3 with 3072 MB.
 If more RAM is used then we have on the machince including swap space, then the script will end with a OOM.
-![htop_ram1.png](htop_ram1.png)
-![htop_ram2.png](htop_ram2.png)
-![htop_ram3.png](htop_ram3.png)
+![htop_ram1.png](resources/htop_ram1.png)
+![htop_ram2.png](resources/htop_ram2.png)
+![htop_ram3.png](resources/htop_ram3.png)
 
 #### Start htop and enter „swapoff –a“ on the terminal. Start the script with the following arguments: 1, 2, 3, 4 and 5. What happens now? What has changed?
 
@@ -2040,11 +2040,11 @@ swapon: /media/ptfl/swapfile.img: insecure permissions 0644, 0600 suggested.
 # /media/ptfl/swapfile.img swap swap sw 0 0
 ```
 
-![img.png](increased_swapspace.png)
+![img.png](resources/increased_swapspace.png)
 
 Here we can see it works now with the Parameter 5.
 
-![img.png](htop_ram_5_working.png)
+![img.png](resources/htop_ram_5_working.png)
 
 https://askubuntu.com/questions/178712/how-to-increase-swap-space
 
@@ -2052,7 +2052,7 @@ https://askubuntu.com/questions/178712/how-to-increase-swap-space
 
 1. without running script:
     1. htop
-       ![img.png](compare_htop_procmeminfo_no_run_ram.png)
+       ![img.png](resources/compare_htop_procmeminfo_no_run_ram.png)
     2. Showing the content of /proc/meminfo
          ```bash
          root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# cat /proc/meminfo
@@ -2109,7 +2109,7 @@ https://askubuntu.com/questions/178712/how-to-increase-swap-space
          ```
 2. with running ram.py script and parameter 5:
     1. htop
-       ![img.png](compare_htop_procmeminfo_run_ram_with4.png)
+       ![img.png](resources/compare_htop_procmeminfo_run_ram_with4.png)
     2. Showing the content of /proc/meminfo
        ```bash
        parallels@ubuntu-linux-22-04-02-desktop:~$ cat /proc/meminfo
