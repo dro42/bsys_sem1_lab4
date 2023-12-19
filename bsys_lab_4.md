@@ -530,6 +530,8 @@ This file is useful for understanding the memory layout of a process, including 
 space are mapped to which files, and with what permissions. It can help in debugging, performance tuning, and security
 analysis.
 
+Source: https://stackoverflow.com/a/1401595/23129477, https://man7.org/linux/man-pages/man5/proc.5.html
+
 #### Look at “/proc/<processid>/smaps”. What do the values Size, Rss, Pss, Shared_Clean,Shared_Dirty, Private_Clean, Private_Dirty, Referenced, Swap and SwapPss mean?
 
 The `/proc/<processid>/smaps` file provides detailed memory usage statistics for each memory region of a process. Here's
