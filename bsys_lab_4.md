@@ -8,17 +8,17 @@
         - [What is the output of your implementation?](#what-is-the-output-of-your-implementation)
         - [What is a file descriptor?](#what-is-a-file-descriptor)
         - [Where can you find information about the file descriptor?](#where-can-you-find-information-about-the-file-descriptor-hint-a-process-is-an-instance-of-a-computer-program-that-is-being-executed)
-        - [What does pos, flags and mnt_id mean?](#what-does-pos-flags-and-mnt_id-mean-hint-procprocessidfdinfo)
-        - [What permissions do your files have?](#lets-have-a-look-at-the-files-what-permissions-do-your-files-have-hint-ls--lahi-procprocessidfd)
+        - [What does pos, flags and mnt_id mean?](#what-does-pos-flags-and-mnt_id-mean-hint-procpidfdinfo)
+        - [What permissions do your files have?](#lets-have-a-look-at-the-files-what-permissions-do-your-files-have-hint-ls--lahi-procpidfd)
     - [4.2 Run the script every 10 minutes](#42-run-the-script-every-10-minutes)
         - [What is a cronjob?](#what-is-a-cronjob)
             - [Solution Cronjob](#solution-cronjob)
     - [4.3 While 1](#43-while-1)
         - [Solution to infinite Loop](#solution-infinite-loop)
-        - [Find out the pid (<processid>) of the process and look at “/proc/<processid>/maps”. What does
-          the values mean?](#find-out-the-pid-processid-of-the-process-and-look-at-procprocessidmaps-what-do-the-values-mean)
-        - [Look at “/proc/<processid>/smaps”. What does the values Size, Rss, Pss, Shared_Clean,
-          Shared_Dirty, Private_Clean, Private_Dirty, Referenced, Swap and SwapPss mean?](#look-at-procprocessidsmaps-what-do-the-values-size-rss-pss-shared_cleanshared_dirty-private_clean-private_dirty-referenced-swap-and-swappss-mean)
+        - [Find out the pid (Process ID) of the process and look at “/proc/$PID/maps”. What does
+          the values mean?](#find-out-the-pid-pid-of-the-process-and-look-at-procpidmaps-what-do-the-values-mean)
+        - [Look at “/proc/$PID/smaps”. What do the values Size, Rss, Pss, Shared_Clean,
+          Shared_Dirty, Private_Clean, Private_Dirty, Referenced, Swap and SwapPss mean?](#look-at-procpidsmaps-what-do-the-values-size-rss-pss-shared_clean-shared_dirty-private_clean-private_dirty-referenced-swap-and-swappss-mean)
         - [What is the pagesize of your system?](#what-is-the-pagesize-of-your-system)
         - [How can you print out all major and minor pagefaults?]()
         - [Start htop and enter „swapoff –a“ on the terminal. What happens?](#start-htop-and-enter-swapoff-a-on-the-terminal-what-happens)
@@ -320,9 +320,9 @@ and **/proc/1234/fdinfo**.
 Remember, accessing these directories requires appropriate permissions. You might need superuser (root) privileges,
 especially if you're inspecting a process that you don't own.
 
-#### What does pos, flags and mnt_id mean? (Hint: “/proc/<processid>/fdinfo”)
+#### What does pos, flags and mnt_id mean? (Hint: “/proc/$PID/fdinfo”)
 
-In the context of `/proc/<processid>/fdinfo` on a Linux system, `pos`, `flags`, and `mnt_id` provide detailed
+In the context of `/proc/$PID/fdinfo` on a Linux system, `pos`, `flags`, and `mnt_id` provide detailed
 information about each file descriptor used by the process. Here's what each of these terms represents:
 
 1. **pos**: This stands for "position." It indicates the current file offset for the file descriptor. This is
@@ -342,7 +342,7 @@ Together, these pieces of information provide a comprehensive view of how a part
 accessed by a process at a given moment. This can be very useful for debugging, performance analysis, and understanding
 the behavior of running processes on a Linux system.
 
-#### Let’s have a look at the files. What permissions do your files have? (Hint: “ls -lahi proc/<processid>/fd/”)
+#### Let’s have a look at the files. What permissions do your files have? (Hint: “ls -lahi proc/$PID/fd/”)
 
 ```bash
 c2310475021@os-server:~$ ps -u c2310475021 --forest
@@ -469,7 +469,7 @@ def main():
         append_to_file("file2.txt")
 ```
 
-#### Find out the pid (<processid>) of the process and look at “/proc/<processid>/maps”. What do the values mean?
+#### Find out the pid ($PID) of the process and look at “/proc/$PID/maps”. What do the values mean?
 
 ```bash
 root@ubuntu-linux-22-04-02-desktop:/home/parallels/lab4# ps aux --forest
@@ -514,7 +514,7 @@ ffffe0503000-ffffe0524000 rw-p 00000000 00:00 0                          [stack]
 
 ```
 
-The output of `/proc/<processid>/maps` provides a detailed view of a process's memory mapping. Each line represents a
+The output of `/proc/$PID/maps` provides a detailed view of a process's memory mapping. Each line represents a
 memory region. Let's break down what the values mean:
 
 - **Memory Address Range**: `aaaaadda0000-aaaaae2c3000`. This is the range of virtual memory addresses allocated to this
@@ -532,9 +532,9 @@ analysis.
 
 Source: https://stackoverflow.com/a/1401595/23129477, https://man7.org/linux/man-pages/man5/proc.5.html
 
-#### Look at “/proc/<processid>/smaps”. What do the values Size, Rss, Pss, Shared_Clean,Shared_Dirty, Private_Clean, Private_Dirty, Referenced, Swap and SwapPss mean?
+#### Look at “/proc/$PID/smaps”. What do the values Size, Rss, Pss, Shared_Clean, Shared_Dirty, Private_Clean, Private_Dirty, Referenced, Swap and SwapPss mean?
 
-The `/proc/<processid>/smaps` file provides detailed memory usage statistics for each memory region of a process. Here's
+The `/proc/$PID/smaps` file provides detailed memory usage statistics for each memory region of a process. Here's
 what the values mean:
 
 - **Size**: Total size of the memory region.
@@ -550,6 +550,8 @@ what the values mean:
 
 These values are useful for understanding a process's memory consumption and behavior, especially in shared and private
 memory contexts.
+
+Source: https://unix.stackexchange.com/questions/33381/getting-information-about-a-process-memory-usage-from-proc-pid-smaps, https://man7.org/linux/man-pages/man5/proc.5.html
 
 Output:
 
@@ -1997,13 +1999,13 @@ root@ubuntu-linux-22-04-02-desktop:/home/parallels# ps -eo min_flt,maj_flt,cmd
 
 #### Implement the following python script “ram.py”.
 
-    ```
-    import sys, time
-    some_str = ' ' * 1024 * 1024 * 1024 * int(sys.argv[1])
-    while 1:
-        print("true")
-        time.sleep(1)
-    ```
+```
+import sys, time
+some_str = ' ' * 1024 * 1024 * 1024 * int(sys.argv[1])
+while 1:
+    print("true")
+    time.sleep(1)
+```
 
 ##### Solution ram.py:
 
