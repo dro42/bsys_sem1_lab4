@@ -1,7 +1,5 @@
 # Lab 4
 
-[Lab 4 Assignment]()
-
 - [4. Filesystem and Memory](#4-filesystem-and-memory)
     - [4.1. File Handle](#41-file-handle)
         - [Solution to Pseudocode:](#solution-to-pseudocode)
