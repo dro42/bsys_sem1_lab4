@@ -20,7 +20,7 @@
         - [Look at “/proc/$PID/smaps”. What do the values Size, Rss, Pss, Shared_Clean,
           Shared_Dirty, Private_Clean, Private_Dirty, Referenced, Swap and SwapPss mean?](#look-at-procpidsmaps-what-do-the-values-size-rss-pss-shared_clean-shared_dirty-private_clean-private_dirty-referenced-swap-and-swappss-mean)
         - [What is the pagesize of your system?](#what-is-the-pagesize-of-your-system)
-        - [How can you print out all major and minor pagefaults?]()
+        - [How can you print out all major and minor pagefaults?](#how-can-you-print-out-all-major-and-minor-pagefaults)
         - [Start htop and enter „swapoff –a“ on the terminal. What happens?](#start-htop-and-enter-swapoff-a-on-the-terminal-what-happens)
         - [Reboot your system and print out all your page faults again.](#reboot-your-system-and-print-out-all-your-page-faults-again)
     - [4.4 Fill the RAM](#44-fill-the-ram)
@@ -1299,6 +1299,8 @@ VmFlags: rd wr mr mw me gd ac
 
 #### What is the pagesize of your system?
 
+A page, memory page, or virtual page is a fixed-length contiguous block of virtual memory, described by a single entry
+in the page table.
 To find the page size (the size of a memory page) of your system, you can use the **getconf** command in a Unix-like
 operating system. Specifically, you would use:
 
@@ -1314,7 +1316,15 @@ This command queries system configuration variables, and **PAGESIZE** or **PAGE_
 size of a memory page in bytes. When you run this command in a terminal, it will return the page size of your system.
 This is a standard method across most Unix-like systems, including Linux distributions.
 
+Source: https://unix.stackexchange.com/a/128218/596732, https://man7.org/linux/man-pages/man1/getconf.1p.html
+
 #### How can you print out all major and minor pagefaults?
+
+In the context of virtual memory, operating systems differentiate between two types of page faults: major and minor
+faults. A major page fault happens when a page that a process tries to access is not in memory. Addressing this requires
+reading the needed page from the backing store (like a disk) into a free frame in memory and then updating the page
+table. On the other hand, a minor page fault occurs when the process does not have a logical mapping to a page that is
+actually in memory, but not currently mapped to the process's address space.
 
 To print out all major and minor page faults in Unix-like operating systems, you can use the `ps` command. The `ps`
 command provides information about currently running processes, including page faults. To include major and minor page
