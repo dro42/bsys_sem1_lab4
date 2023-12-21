@@ -442,6 +442,8 @@ maintenance tasks. They're especially useful for automating repetitive tasks tha
 For more detailed and specific information on cron jobs and their usage in Ubuntu systems, you can refer to the Ubuntu
 Users Cron Wiki page [here](https://wiki.ubuntuusers.de/Cron/).
 
+Open your crontab file for editing by running crontab -e in the terminal. This command will open the crontab file in your default text editor.
+Then enter the following string in that file: */10 * * * * /usr/bin/python3 <pathOfYourFile>/file_handle.py
 #### Solution Cronjob:
 
 ```bash
